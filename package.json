@@ -1,0 +1,24 @@
+{
+  "name": "bizalert-cache-proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:biz-alert-ru/cache-proxy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/biz-alert-ru/cache-proxy/issues"
+  },
+  "homepage": "https://github.com/biz-alert-ru/cache-proxy",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase-admin": "^8.10.0",
+    "mongodb": "^3.5.6"
+  }
+}
