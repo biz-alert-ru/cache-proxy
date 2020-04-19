@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  mongo:
+    image: mongo:latest
+  api:
+    build: .
+    command: ["node", "index.js"]
+    volumes:
+      - "./:/app:ro"
+    links:
+      - mongo
+    ports:
+      - 3333:3333

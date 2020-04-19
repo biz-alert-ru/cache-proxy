@@ -1,7 +1,13 @@
+require('dotenv').config();
+
+const appPort = process.env.PORT;
+const mongoUri = process.env.MONGO_URI;
+const firebaseKeyPath = process.env.FIREBASE_KEY_PATH;
+
 const express = require('express')
 const admin = require('firebase-admin');
 var MongoClient = require('mongodb').MongoClient
-var serviceAccount = require('./key.json');
+var serviceAccount = require(firebaseKeyPath);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -12,8 +18,9 @@ let query = db.collection('business');
 
 
 
-var mongoDB
-MongoClient.connect('mongodb://localhost:27017/business', function (err, client) {
+var mongoDB;
+
+MongoClient.connect(mongoUri, function (err, client) {
   if (err) throw err
 
   mongoDB = client.db('business')
@@ -35,8 +42,8 @@ MongoClient.connect('mongodb://localhost:27017/business', function (err, client)
   });
 })
 
-const app = express()
-const port = 3000
+const app = express();
+const port = appPort;
 
 app.get('/list', (req, res) => {
   mongoDB.collection('business').find({display: true}).toArray(function (err, result) {
@@ -45,4 +52,4 @@ app.get('/list', (req, res) => {
   })
 })
 
-app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
+app.listen(port, () => console.log(`App listening at http://localhost:${port}/list`))
