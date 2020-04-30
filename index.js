@@ -3,6 +3,7 @@ require('dotenv').config();
 const appPort = process.env.PORT;
 const mongoUri = process.env.MONGO_URI;
 const firebaseKeyPath = process.env.FIREBASE_KEY_PATH;
+const allowOrigin = process.env.ALLOW_ORIGIN;
 
 const express = require('express')
 const admin = require('firebase-admin');
@@ -12,6 +13,7 @@ var serviceAccount = require(firebaseKeyPath);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
+
 
 let db = admin.firestore();
 let query = db.collection('business');
@@ -44,6 +46,11 @@ MongoClient.connect(mongoUri, function (err, client) {
 
 const app = express();
 const port = appPort;
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", allowOrigin); // update to match the domain you will make the request from
+  next();
+});
 
 app.get('/list', (req, res) => {
   mongoDB.collection('business').find({display: true}).toArray(function (err, result) {
